@@ -21,18 +21,13 @@ app.post("/tweets", (request, response) => {
 })
 app.get("/tweets", (request, response) => {
     if (tweetsArray.length > 10) {
-
         let lastTweets = getLastTweets(tweetsArray);
-        let ordenedTweets = [];
-        for (let i = (lastTweets.length - 1); i >= 0; i--) {
-            ordenedTweets.push(lastTweets[i]);
-        }
+        let ordenedTweets = sortTweets(lastTweets);
+
         response.send(ordenedTweets);
     } else {
-        let ordenedTweets = [];
-        for (let i = (tweetsArray.length - 1); i >= 0; i--) {
-            ordenedTweets.push(tweetsArray[i]);
-        }
+        let ordenedTweets = sortTweets(tweetsArray);
+
         response.send(ordenedTweets);
     }
 });
@@ -47,6 +42,14 @@ function getLastTweets(tweetsArray) {
     }
 
     return lastTweets;
+}
+
+function sortTweets(tweetsArray) {
+    let ordenedTweets = [];
+    for (let i = (tweetsArray.length - 1); i >= 0; i--) {
+        ordenedTweets.push(tweetsArray[i]);
+    }
+    return ordenedTweets;
 }
 
 app.listen(5000);
