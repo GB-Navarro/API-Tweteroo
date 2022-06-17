@@ -23,13 +23,17 @@ app.get("/tweets", (request, response) => {
     if(tweetsArray.length > 10){
         let lastTweets = []
         let aux = 0;
-        for(let i = (tweetsArray.length - 11); aux != 10; i++){
+        for(let i = (tweetsArray.length - 10); aux != 10; i++){
             lastTweets.push(tweetsArray[i]);
             aux += 1;
         }
         response.send(lastTweets);
     }else{
-        response.send(tweetsArray);
+        let ordenedTweets = [];
+        for(let i = (tweetsArray.length - 1); i >= 0; i--){
+            ordenedTweets.push(tweetsArray[i]);
+        }
+        response.send(ordenedTweets);
     }
 });
 
