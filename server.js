@@ -20,21 +20,33 @@ app.post("/tweets", (request, response) => {
     response.send("Ok!");
 })
 app.get("/tweets", (request, response) => {
-    if(tweetsArray.length > 10){
-        let lastTweets = []
-        let aux = 0;
-        for(let i = (tweetsArray.length - 10); aux != 10; i++){
-            lastTweets.push(tweetsArray[i]);
-            aux += 1;
-        }
-        response.send(lastTweets);
-    }else{
+    if (tweetsArray.length > 10) {
+
+        let lastTweets = getLastTweets(tweetsArray);
         let ordenedTweets = [];
-        for(let i = (tweetsArray.length - 1); i >= 0; i--){
+        for (let i = (lastTweets.length - 1); i >= 0; i--) {
+            ordenedTweets.push(lastTweets[i]);
+        }
+        response.send(ordenedTweets);
+    } else {
+        let ordenedTweets = [];
+        for (let i = (tweetsArray.length - 1); i >= 0; i--) {
             ordenedTweets.push(tweetsArray[i]);
         }
         response.send(ordenedTweets);
     }
 });
+
+function getLastTweets(tweetsArray) {
+    let lastTweets = [];
+    let aux = 0;
+
+    for (let i = (tweetsArray.length - 10); aux != 10; i++) {
+        lastTweets.push(tweetsArray[i]);
+        aux += 1;
+    }
+
+    return lastTweets;
+}
 
 app.listen(5000);
