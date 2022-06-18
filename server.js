@@ -10,12 +10,12 @@ app.use(express.json());
 app.use(cors());
 
 app.post("/sign-up", (request, response) => {
-    console.log(request.body);
     const username = request.body.username;
     const avatar = request.body.avatar;
-    if(username.length === 0 || avatar.length === 0){
+    if (username.length === 0 || avatar.length === 0) {
         response.sendStatus(400);
     }
+    console.log(validateUserAvatar(avatar))
     user = request.body;
     response.send("Ok!");
 });
@@ -63,4 +63,17 @@ function sortTweets(tweetsArray) {
     return ordenedTweets;
 }
 
+function validateUserAvatar(avatar) {
+    for (let i = 0; i < avatar.length; i++) {
+        if (avatar[i] === ".") {
+            let type = avatar[i + 1] + avatar[i + 2] + avatar[i + 3];
+            if (type === "jpg" || type === "png" || type === "gif") {
+                return true;
+            } else if (type + avatar[i + 4] === "jpeg") {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 app.listen(5000);
