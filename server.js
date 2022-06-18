@@ -10,6 +10,12 @@ app.use(express.json());
 app.use(cors());
 
 app.post("/sign-up", (request, response) => {
+    console.log(request.body);
+    const username = request.body.username;
+    const avatar = request.body.avatar;
+    if(username.length === 0 || avatar.length === 0){
+        response.sendStatus(400);
+    }
     user = request.body;
     response.send("Ok!");
 });
