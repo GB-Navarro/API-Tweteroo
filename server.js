@@ -42,6 +42,22 @@ app.get("/tweets", (request, response) => {
     }
 });
 
+app.get("/tweets/:user", (request, response) => {
+    const user = request.params.user;
+    let userTweets = [];
+    tweetsArray.forEach((i) => {
+        if(tweetsArray[i].username === user){
+            userTweets.push(tweetsArray[i]);
+        }
+    })
+    if(userTweets.length != 0){
+        response.send(userTweets);
+    }else{
+        response.send("O usuário em questão não possui nenhum tweet!")
+    }
+    
+});
+
 function getLastTweets(tweetsArray) {
     let lastTweets = [];
     let aux = 0;
