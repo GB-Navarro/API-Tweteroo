@@ -19,12 +19,12 @@ app.post("/sign-up", (request, response) => {
     response.sendStatus(400);
   }
   user = request.body;
-  response.send("Ok!");
+  response.status(201).send("Ok!");
 });
 
 app.post("/tweets", (request, response) => {
   createNewTweet(request.body.tweet);
-  response.send("Ok!");
+  response.status(201).send("Ok!");
 });
 
 app.get("/tweets", (request, response) => {
