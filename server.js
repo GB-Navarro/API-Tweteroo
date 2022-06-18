@@ -12,10 +12,10 @@ app.use(cors());
 app.post("/sign-up", (request, response) => {
     const username = request.body.username;
     const avatar = request.body.avatar;
-    if (username.length === 0 || avatar.length === 0) {
+    if((validateUsername(username) === false) || validateUserAvatar(avatar) === false){
         response.sendStatus(400);
+        //alert("Todos os campos são obrigatórios!")
     }
-    console.log(validateUserAvatar(avatar))
     user = request.body;
     response.send("Ok!");
 });
@@ -63,17 +63,34 @@ function sortTweets(tweetsArray) {
     return ordenedTweets;
 }
 
+function validateUsername(username) {
+    let itsValid = false
+    if (username.length === 0) {
+        return itsValid;
+        
+    }else{
+        itsValid = true;
+        return itsValid;
+    }
+}
 function validateUserAvatar(avatar) {
-    for (let i = 0; i < avatar.length; i++) {
-        if (avatar[i] === ".") {
-            let type = avatar[i + 1] + avatar[i + 2] + avatar[i + 3];
-            if (type === "jpg" || type === "png" || type === "gif") {
-                return true;
-            } else if (type + avatar[i + 4] === "jpeg") {
-                return true;
+    let itsValid = false;
+    if (avatar.length === 0) {
+        return itsValid;
+    } else {
+        for (let i = 0; i < avatar.length; i++) {
+            if (avatar[i] === ".") {
+                let type = avatar[i + 1] + avatar[i + 2] + avatar[i + 3];
+                if (type === "jpg" || type === "png" || type === "gif") {
+                    itsValid = true;
+                    return itsValid;
+                } else if (type + avatar[i + 4] === "jpeg") {
+                    itsValid = true;
+                    return itsValid;
+                }
             }
         }
+        return itsValid;
     }
-    return false;
 }
 app.listen(5000);
