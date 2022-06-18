@@ -11,23 +11,28 @@ app.use(cors());
 
 app.post("/sign-up", (request, response) => {
     user = request.body;
-    console.log(user);
     response.send("Ok!");
 });
 app.post("/tweets", (request, response) => {
-    tweetsArray.push(request.body);
-    console.log(tweetsArray);
+    let tweet = {
+        username: "",
+        avatar: "",
+        tweet: ""
+    }
+    tweet.username = user.username;
+    tweet.avatar = user.avatar
+    tweet.tweet = request.body.tweet
+    tweetsArray.push(tweet);
+
     response.send("Ok!");
 })
 app.get("/tweets", (request, response) => {
     if (tweetsArray.length > 10) {
         let lastTweets = getLastTweets(tweetsArray);
         let ordenedTweets = sortTweets(lastTweets);
-
         response.send(ordenedTweets);
     } else {
         let ordenedTweets = sortTweets(tweetsArray);
-
         response.send(ordenedTweets);
     }
 });
