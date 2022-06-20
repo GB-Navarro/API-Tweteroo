@@ -23,7 +23,7 @@ app.post("/sign-up", (request, response) => {
 });
 
 app.post("/tweets", (request, response) => {
-    if (validateTweet(request.body.tweet, request.body.username) === true) {
+    if (validateTweet(request.body.tweet, request.headers.user) === true) {
         createNewTweet(request.body.tweet);
         response.status(201).send("Ok!");
     } else {
@@ -45,11 +45,11 @@ app.get("/tweets", (request, response) => {
 app.get("/tweets/:user", (request, response) => {
     const user = request.params.user;
     let userTweets = [];
-    tweetsArray.forEach((i) => {
+    for(let i = 0; i < tweetsArray.length; i ++){
         if(tweetsArray[i].username === user){
             userTweets.push(tweetsArray[i]);
         }
-    })
+    }
     if(userTweets.length != 0){
         response.send(userTweets);
     }else{
